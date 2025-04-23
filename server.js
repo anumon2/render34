@@ -1,23 +1,30 @@
 const express = require('express');
+const axios = require('axios');
 const app = express();
-// Use the dynamic port provided by the hosting environment
 const port = process.env.PORT || 1880;
+
+const esp8266_ip = 'http://YOUR_ESP8266_IP'; // replace with your ESP8266 local IP
 
 app.use(express.json());
 
-// Endpoint to turn on the light
-app.get('/lighton', (req, res) => {
-  console.log('Light ON command received');
-  res.send('Light turned on');
+app.get('/lighton', async (req, res) => {
+  try {
+    await axios.get(`${esp8266_ip}/lighton`);
+    res.send('Light turned on');
+  } catch (error) {
+    res.status(500).send('Failed to turn on light');
+  }
 });
 
-// Endpoint to turn off the light
-app.get('/lightoff', (req, res) => {
-  console.log('Light OFF command received');
-  res.send('Light turned off');
+app.get('/lightoff', async (req, res) => {
+  try {
+    await axios.get(`${esp8266_ip}/lightoff`);
+    res.send('Light turned off');
+  } catch (error) {
+    res.status(500).send('Failed to turn off light');
+  }
 });
 
-// Start the server
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
