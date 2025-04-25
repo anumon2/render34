@@ -3,7 +3,7 @@ const axios = require('axios');
 const app = express();
 const port = process.env.PORT || 1880;
 
-const esp8266_ip = '192.168.1.3'; // replace with your ESP8266 local IP
+const esp8266_ip = '192.168.1.2'; // replace with your ESP8266 local IP
 
 app.use(express.json());
 
